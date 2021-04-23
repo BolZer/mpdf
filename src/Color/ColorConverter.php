@@ -173,7 +173,7 @@ class ColorConverter
 		$c = false;
 
 		if (preg_match('/^[\d]+$/', $color)) {
-			$c = [static::MODE_GRAYSCALE, $color]; // i.e. integer only
+			$c = [static::MODE_GRAYSCALE, (float) $color]; // i.e. integer only
 		} elseif (strpos($color, '#') === 0) { // case of #nnnnnn or #nnn
 			$c = $this->processHashColor($color);
 		} elseif (preg_match('/(rgba|rgb|device-cmyka|cmyka|device-cmyk|cmyk|hsla|hsl|spot)\((.*?)\)/', $color, $m)) {
@@ -206,7 +206,12 @@ class ColorConverter
 		$g = hexdec(substr($cor, 3, 2));
 		$b = hexdec(substr($cor, 5, 2));
 
-		return [3, $r, $g, $b];
+        return [
+            3,
+            (float) $r,
+            (float) $g,
+            (float) $b
+        ];
 	}
 
 	/**
